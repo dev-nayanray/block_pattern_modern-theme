@@ -1,0 +1,305 @@
+/* ==========================================================================
+   Modern CSS Reset & Base Styles
+   ========================================================================== */
+   :root {
+    /* Color Scheme */
+    --primary-color: #1a73e8;
+    --secondary-color: #4a148c;
+    --dark-bg: #1a1a1a;
+    --light-bg: #ffffff;
+    --text-dark: #333333;
+    --text-light: #ffffff;
+    --accent-color: #00d084;
+    --hover-effect: brightness(0.95);
+    
+    /* Spacing */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 2rem;
+    --spacing-lg: 3rem;
+    
+    /* Shadows */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.2);
+    
+    /* Transitions */
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+  }
+  
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+    color: var(--text-dark);
+    background: var(--light-bg);
+    transition: background-color var(--transition-normal);
+  }
+  
+  .dark-mode {
+    --light-bg: var(--dark-bg);
+    --text-dark: var(--text-light);
+    background: var(--dark-bg);
+  }
+  
+  /* ==========================================================================
+     Utility Classes
+     ========================================================================== */
+  .container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+  }
+  
+  .section-spacing {
+    padding: var(--spacing-lg) 0;
+  }
+  
+  .flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-md);
+  }
+  
+  /* ==========================================================================
+     Component Styles
+     ========================================================================== */
+  /* Header */
+  .site-header {
+    background: var(--primary-color);
+    color: var(--text-light);
+    padding: var(--spacing-md);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: var(--shadow-md);
+  }
+  
+  /* Cards */
+  .card {
+    background: var(--light-bg);
+    border-radius: 12px;
+    padding: var(--spacing-md);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+  }
+  
+  /* Team Members */
+  .team-card {
+    text-align: center;
+    overflow: hidden;
+  }
+  
+  .team-card img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    border-radius: 12px 12px 0 0;
+    transition: transform var(--transition-normal);
+  }
+  
+  .team-card:hover img {
+    transform: scale(1.05);
+  }
+  
+  /* Pricing */
+  .pricing-card {
+    border: 2px solid var(--primary-color);
+    text-align: center;
+  }
+  
+  .price {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: var(--spacing-sm) 0;
+  }
+  
+  /* Timeline */
+  .timeline-grid {
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .timeline-item {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: var(--spacing-md);
+  }
+  
+  /* FAQ */
+  .faq-accordion {
+    background: var(--light-bg);
+    border-radius: 12px;
+  }
+  
+  .faq-item {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  .faq-question {
+    padding: var(--spacing-sm);
+    cursor: pointer;
+    transition: background var(--transition-fast);
+  }
+  
+  .faq-question:hover {
+    background: rgba(0, 0, 0, 0.03);
+  }
+  
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height var(--transition-normal);
+  }
+  
+  .faq-item.active .faq-answer {
+    max-height: 500px;
+  }
+  
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all var(--transition-fast);
+  }
+  
+  .btn-primary {
+    background: var(--primary-color);
+    color: var(--text-light);
+  }
+  
+  .btn-primary:hover {
+    filter: var(--hover-effect);
+    transform: translateY(-2px);
+  }
+  
+  /* ==========================================================================
+     Responsive Design
+     ========================================================================== */
+  @media (max-width: 1024px) {
+    .grid-3 {
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+    
+    .price {
+      font-size: 2rem;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    :root {
+      --spacing-md: 1rem;
+      --spacing-lg: 2rem;
+    }
+    
+    .team-card img {
+      height: 200px;
+    }
+  }
+  
+  @media (hover: none) {
+    .card:hover {
+      transform: none;
+      box-shadow: var(--shadow-sm);
+    }
+  }
+
+  .custom-slider img {
+    width: 100%;
+    transition: transform 0.5s ease-in-out;
+}
+.custom-slider:hover img {
+    transform: scale(1.05);
+}
+.custom-portfolio figure {
+  position: relative;
+  overflow: hidden;
+}
+.custom-portfolio figcaption {
+  position: absolute;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+}
+/* Slider Styles */
+.slider-item {
+  min-height: 100vh;
+  transition: opacity 0.5s ease;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background: white;
+  padding: 2em;
+  border-radius: 10px;
+  max-width: 600px;
+  animation: modalEnter 0.3s ease;
+}
+
+@keyframes modalEnter {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Gradient Section */
+.gradient-section {
+  padding: 4rem 0;
+}
+
+.floating {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0px); }
+}

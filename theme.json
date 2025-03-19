@@ -1,0 +1,43 @@
+{
+    "version": 2,
+    "settings": {
+        "color": {
+            "palette": [
+                { "name": "Primary", "slug": "primary", "color": "#1a73e8" },
+                { "name": "Secondary", "slug": "secondary", "color": "#ff4081" },
+                { "name": "Background", "slug": "background", "color": "#ffffff" },
+                { "name": "Dark", "slug": "dark", "color": "#111111" }
+            ],
+            "defaultDuotone": [],
+            "gradients": [],
+            "custom": true
+        },
+        "spacing": {
+            "padding": true,
+            "margin": true,
+            "blockGap": true
+        },
+        "typography": {
+            "fontFamilies": [
+                { "name": "Inter", "slug": "inter", "fontFamily": "'Inter', sans-serif" },
+                { "name": "Playfair", "slug": "playfair", "fontFamily": "'Playfair Display', serif" }
+            ],
+            "fontSizes": [
+                { "name": "Small", "slug": "small", "size": "14px" },
+                { "name": "Medium", "slug": "medium", "size": "18px" },
+                { "name": "Large", "slug": "large", "size": "32px" },
+                { "name": "Extra Large", "slug": "extra-large", "size": "48px" }
+            ]
+        }
+    },
+    "styles": {
+        "color": {
+            "background": "#ffffff",
+            "text": "#333333"
+        },
+        "typography": {
+            "fontFamily": "Inter, sans-serif",
+            "lineHeight": "1.6"
+        }
+    }
+}
