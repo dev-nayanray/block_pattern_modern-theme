@@ -1,6 +1,4 @@
 <?php
- 
-
 /**
  * Register Testimonials Block Pattern with Ratings and Images
  */

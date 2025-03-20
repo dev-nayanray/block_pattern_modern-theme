@@ -1,106 +1,275 @@
 <?php
-// Enhanced Theme Setup with additional features
-function my_theme_setup() {
-    // Basic theme supports
-    add_theme_support('title-tag');
-    add_theme_support('post-thumbnails');
-    add_theme_support('wp-block-styles');
-    add_theme_support('align-wide');
-    add_theme_support('editor-styles');
-    add_theme_support('responsive-embeds');
-    add_theme_support('custom-line-height');
-    add_theme_support('custom-units');
-    add_theme_support('html5', array(
-        'comment-list',
-        'comment-form',
-        'search-form',
-        'gallery',
-        'caption',
-        'style',
-        'script'
-    ));
-    
-    // Editor styles
-    add_editor_style(array('style.css', get_template_directory_uri() . '/assets/css/editor-styles.css'));
-    
-    // Register custom navigation menus
-    register_nav_menus(array(
-        'primary' => esc_html__('Primary Menu', 'my-modern-theme'),
-        'footer'  => esc_html__('Footer Menu', 'my-modern-theme')
-    ));
-    
-    // Add image sizes
-    add_image_size('modern-thumbnail', 400, 300, true);
-    add_image_size('modern-medium', 800, 600, true);
-    add_image_size('modern-large', 1200, 900, true);
-    add_image_size('portfolio-square', 600, 600, true);
-    add_image_size('portfolio-landscape', 1200, 800, true);
+/**
+ * My Modern Theme functions and definitions
+ *
+ * @package My_Modern_Theme
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
 }
 
-add_action('after_setup_theme', 'my_theme_setup');
+/**
+ * Define Constants
+ */
+define( 'MY_MODERN_THEME_VERSION', wp_get_theme()->get( 'Version' ) );
+define( 'MY_MODERN_THEME_DIR', get_template_directory() );
+define( 'MY_MODERN_THEME_URI', get_template_directory_uri() );
 
-// Register Portfolio Custom Post Type
-function my_theme_register_portfolio_cpt() {
-    $labels = array(
-        'name'                  => _x('Portfolio', 'Post Type General Name', 'my-modern-theme'),
-        'singular_name'         => _x('Portfolio Item', 'Post Type Singular Name', 'my-modern-theme'),
-        'menu_name'             => __('Portfolio', 'my-modern-theme'),
-        'all_items'             => __('All Portfolio Items', 'my-modern-theme'),
-        'add_new_item'          => __('Add New Portfolio Item', 'my-modern-theme'),
-        'add_new'               => __('Add New', 'my-modern-theme'),
-        'edit_item'             => __('Edit Portfolio Item', 'my-modern-theme'),
-        'update_item'           => __('Update Portfolio Item', 'my-modern-theme'),
-        'view_item'             => __('View Portfolio Item', 'my-modern-theme'),
-    );
+/**
+ * Theme Setup
+ */
+function my_modern_theme_setup() {
+	// Basic theme supports
+	add_theme_support( 'title-tag' );
+	add_theme_support( 'post-thumbnails' );
+	add_theme_support( 'automatic-feed-links' );
+	add_theme_support( 'html5', array(
+		'comment-list',
+		'comment-form',
+		'search-form',
+		'gallery',
+		'caption',
+		'style',
+		'script',
+	) );
 
-    $args = array(
-        'label'                 => __('Portfolio', 'my-modern-theme'),
-        'description'           => __('Portfolio items showcase', 'my-modern-theme'),
-        'labels'                => $labels,
-        'supports'              => array('title', 'editor', 'thumbnail', 'excerpt'),
-        'taxonomies'            => array('portfolio_category', 'portfolio_tag'),
-        'hierarchical'          => false,
-        'public'                => true,
-        'show_ui'               => true,
-        'show_in_menu'          => true,
-        'menu_position'         => 5,
-        'menu_icon'             => 'dashicons-portfolio',
-        'show_in_admin_bar'     => true,
-        'show_in_nav_menus'     => true,
-        'can_export'            => true,
-        'has_archive'           => true,
-        'exclude_from_search'  => false,
-        'publicly_queryable'    => true,
-        'capability_type'       => 'post',
-        'show_in_rest'          => true,
-    );
+	// Gutenberg supports
+	add_theme_support( 'wp-block-styles' );
+	add_theme_support( 'align-wide' );
+	add_theme_support( 'editor-styles' );
+	add_theme_support( 'responsive-embeds' );
+	add_theme_support( 'custom-line-height' );
+	add_theme_support( 'custom-spacing' );
+	add_theme_support( 'custom-units', array( 'rem', 'em', 'px', 'vh', 'vw' ) );
 
-    register_post_type('portfolio', $args);
+	// Custom logo
+	add_theme_support( 'custom-logo', array(
+		'height'      => 100,
+		'width'       => 400,
+		'flex-height' => true,
+		'flex-width'  => true,
+	) );
 
-    // Register Portfolio Taxonomy
-    register_taxonomy('portfolio_category', array('portfolio'), array(
-        'labels' => array(
-            'name' => __('Portfolio Categories', 'my-modern-theme'),
-            'singular_name' => __('Portfolio Category', 'my-modern-theme'),
-        ),
-        'hierarchical' => true,
-        'show_admin_column' => true,
-        'show_in_rest' => true,
-    ));
+	// Editor styles
+	add_editor_style( array( 'style.css', 'assets/css/editor-styles.css' ) );
 
-    register_taxonomy('portfolio_tag', array('portfolio'), array(
-        'labels' => array(
-            'name' => __('Portfolio Tags', 'my-modern-theme'),
-            'singular_name' => __('Portfolio Tag', 'my-modern-theme'),
-        ),
-        'hierarchical' => false,
-        'show_admin_column' => true,
-        'show_in_rest' => true,
-    ));
+	// Navigation menus
+	register_nav_menus( array(
+		'primary' => esc_html__( 'Primary Menu', 'my-modern-theme' ),
+		'footer'  => esc_html__( 'Footer Menu', 'my-modern-theme' ),
+	) );
+
+	// Image sizes
+	add_image_size( 'modern-thumbnail', 400, 300, true );
+	add_image_size( 'modern-medium', 800, 600, true );
+	add_image_size( 'modern-large', 1200, 900, true );
+	add_image_size( 'portfolio-square', 600, 600, true );
+	add_image_size( 'portfolio-landscape', 1200, 800, true );
 }
-add_action('init', 'my_theme_register_portfolio_cpt', 0);
+add_action( 'after_setup_theme', 'my_modern_theme_setup' );
 
-// Enhanced Block Patterns Registration
+/**
+ * Enqueue Assets
+ */
+function my_modern_theme_scripts() {
+	// Styles
+	wp_enqueue_style(
+		'my-modern-theme-style',
+		get_stylesheet_uri(),
+		array(),
+		MY_MODERN_THEME_VERSION
+	);
+
+	wp_enqueue_style(
+		'my-modern-theme-editor-styles',
+		MY_MODERN_THEME_URI . '/assets/css/editor-styles.css',
+		array(),
+		MY_MODERN_THEME_VERSION
+	);
+
+	// Scripts
+	wp_enqueue_script(
+		'my-modern-theme-script',
+		MY_MODERN_THEME_URI . '/assets/js/main.js',
+		array( 'jquery', 'masonry' ),
+		MY_MODERN_THEME_VERSION,
+		true
+	);
+
+	// Localization
+	wp_localize_script( 'my-modern-theme-script', 'themeData', array(
+		'ajaxUrl' => esc_url( admin_url( 'admin-ajax.php' ) ),
+		'nonce'   => wp_create_nonce( 'theme_ajax_nonce' )
+	) );
+}
+add_action( 'wp_enqueue_scripts', 'my_modern_theme_scripts' );
+
+/**
+ * Custom Post Types
+ */
+function my_modern_theme_register_custom_post_types() {
+	// Portfolio CPT
+	$labels = array(
+		'name'                  => esc_html_x( 'Portfolio', 'Post Type General Name', 'my-modern-theme' ),
+		'singular_name'         => esc_html_x( 'Portfolio Item', 'Post Type Singular Name', 'my-modern-theme' ),
+		'menu_name'             => esc_html__( 'Portfolio', 'my-modern-theme' ),
+		'name_admin_bar'        => esc_html__( 'Portfolio Item', 'my-modern-theme' ),
+		'archives'              => esc_html__( 'Portfolio Archives', 'my-modern-theme' ),
+		'all_items'             => esc_html__( 'All Portfolio Items', 'my-modern-theme' ),
+		'add_new_item'          => esc_html__( 'Add New Portfolio Item', 'my-modern-theme' ),
+		'add_new'               => esc_html__( 'Add New', 'my-modern-theme' ),
+		'new_item'              => esc_html__( 'New Portfolio Item', 'my-modern-theme' ),
+		'edit_item'             => esc_html__( 'Edit Portfolio Item', 'my-modern-theme' ),
+		'update_item'           => esc_html__( 'Update Portfolio Item', 'my-modern-theme' ),
+		'view_item'             => esc_html__( 'View Portfolio Item', 'my-modern-theme' ),
+		'view_items'            => esc_html__( 'View Portfolio Items', 'my-modern-theme' ),
+	);
+
+	$args = array(
+		'label'               => esc_html__( 'Portfolio', 'my-modern-theme' ),
+		'description'         => esc_html__( 'Portfolio items showcase', 'my-modern-theme' ),
+		'labels'              => $labels,
+		'supports'            => array( 'title', 'editor', 'thumbnail', 'excerpt', 'custom-fields', 'revisions' ),
+		'public'              => true,
+		'show_ui'             => true,
+		'show_in_menu'        => true,
+		'menu_position'       => 5,
+		'menu_icon'           => 'dashicons-portfolio',
+		'show_in_admin_bar'   => true,
+		'show_in_nav_menus'   => true,
+		'can_export'          => true,
+		'has_archive'         => true,
+		'exclude_from_search' => false,
+		'publicly_queryable'  => true,
+		'capability_type'     => 'post',
+		'show_in_rest'        => true,
+	);
+	register_post_type( 'portfolio', $args );
+}
+add_action( 'init', 'my_modern_theme_register_custom_post_types' );
+function my_modern_theme_register_taxonomies() {
+	// Portfolio Category Taxonomy
+	$labels = array(
+		'name'              => esc_html_x( 'Portfolio Categories', 'taxonomy general name', 'my-modern-theme' ),
+		'singular_name'     => esc_html_x( 'Portfolio Category', 'taxonomy singular name', 'my-modern-theme' ),
+		'search_items'      => esc_html__( 'Search Portfolio Categories', 'my-modern-theme' ),
+		'all_items'         => esc_html__( 'All Portfolio Categories', 'my-modern-theme' ),
+		'parent_item'       => esc_html__( 'Parent Portfolio Category', 'my-modern-theme' ),
+		'parent_item_colon' => esc_html__( 'Parent Portfolio Category:', 'my-modern-theme' ),
+		'edit_item'         => esc_html__( 'Edit Portfolio Category', 'my-modern-theme' ),
+		'update_item'       => esc_html__( 'Update Portfolio Category', 'my-modern-theme' ),
+		'add_new_item'      => esc_html__( 'Add New Portfolio Category', 'my-modern-theme' ),
+		'new_item_name'     => esc_html__( 'New Portfolio Category Name', 'my-modern-theme' ),
+		'menu_name'         => esc_html__( 'Portfolio Categories', 'my-modern-theme' ),
+	);
+
+	$args = array(
+		'hierarchical'      => true,
+		'labels'            => $labels,
+		'show_ui'           => true,
+		'show_admin_column' => true,
+		'show_in_rest'      => true,
+		'query_var'         => true,
+		'rewrite'           => array( 'slug' => 'portfolio-category' ),
+	);
+
+	register_taxonomy( 'portfolio_category', array( 'portfolio' ), $args );
+}
+add_action( 'init', 'my_modern_theme_register_taxonomies' );
+
+function my_modern_theme_add_portfolio_meta_boxes() {
+	add_meta_box(
+		'portfolio_meta_box', // ID
+		esc_html__( 'Portfolio Details', 'my-modern-theme' ), // Title
+		'my_modern_theme_portfolio_meta_box_callback', // Callback function
+		'portfolio', // Post type
+		'normal', // Context
+		'high' // Priority
+	);
+}
+add_action( 'add_meta_boxes', 'my_modern_theme_add_portfolio_meta_boxes' );
+
+function my_modern_theme_portfolio_meta_box_callback( $post ) {
+	// Add nonce for security
+	wp_nonce_field( 'my_modern_theme_portfolio_meta_box', 'my_modern_theme_portfolio_meta_box_nonce' );
+
+	// Get existing meta values
+	$price = get_post_meta( $post->ID, '_portfolio_price', true );
+	$client_name = get_post_meta( $post->ID, '_portfolio_client_name', true );
+	$project_duration = get_post_meta( $post->ID, '_portfolio_project_duration', true );
+	$rating = get_post_meta( $post->ID, '_portfolio_rating', true );
+
+	// Output the fields
+	echo '<label for="portfolio_price">' . esc_html__( 'Price', 'my-modern-theme' ) . '</label>';
+	echo '<input type="text" id="portfolio_price" name="portfolio_price" value="' . esc_attr( $price ) . '" size="25" />';
+
+	echo '<label for="portfolio_client_name">' . esc_html__( 'Client Name', 'my-modern-theme' ) . '</label>';
+	echo '<input type="text" id="portfolio_client_name" name="portfolio_client_name" value="' . esc_attr( $client_name ) . '" size="25" />';
+
+	echo '<label for="portfolio_project_duration">' . esc_html__( 'Project Duration', 'my-modern-theme' ) . '</label>';
+	echo '<input type="text" id="portfolio_project_duration" name="portfolio_project_duration" value="' . esc_attr( $project_duration ) . '" size="25" />';
+
+	echo '<label for="portfolio_rating">' . esc_html__( 'Rating', 'my-modern-theme' ) . '</label>';
+	echo '<input type="number" id="portfolio_rating" name="portfolio_rating" value="' . esc_attr( $rating ) . '" min="1" max="5" />';
+}
+function my_modern_theme_save_portfolio_meta( $post_id ) {
+	// Check nonce
+	if ( ! isset( $_POST['my_modern_theme_portfolio_meta_box_nonce'] ) || ! wp_verify_nonce( $_POST['my_modern_theme_portfolio_meta_box_nonce'], 'my_modern_theme_portfolio_meta_box' ) ) {
+		return;
+	}
+
+	// Check if this is an autosave
+	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+		return;
+	}
+
+	// Check user permissions
+	if ( ! current_user_can( 'edit_post', $post_id ) ) {
+		return;
+	}
+
+	// Save meta data
+	if ( isset( $_POST['portfolio_price'] ) ) {
+		update_post_meta( $post_id, '_portfolio_price', sanitize_text_field( $_POST['portfolio_price'] ) );
+	}
+	if ( isset( $_POST['portfolio_client_name'] ) ) {
+		update_post_meta( $post_id, '_portfolio_client_name', sanitize_text_field( $_POST['portfolio_client_name'] ) );
+	}
+	if ( isset( $_POST['portfolio_project_duration'] ) ) {
+		update_post_meta( $post_id, '_portfolio_project_duration', sanitize_text_field( $_POST['portfolio_project_duration'] ) );
+	}
+	if ( isset( $_POST['portfolio_rating'] ) ) {
+		update_post_meta( $post_id, '_portfolio_rating', sanitize_text_field( $_POST['portfolio_rating'] ) );
+	}
+}
+add_action( 'save_post', 'my_modern_theme_save_portfolio_meta' );
+
+/**
+ * Security Enhancements
+ */
+function my_modern_theme_security_headers() {
+	if ( ! headers_sent() && ! is_admin() ) {
+		header( 'X-Content-Type-Options: nosniff' );
+		header( 'X-Frame-Options: SAMEORIGIN' );
+		header( 'X-XSS-Protection: 1; mode=block' );
+		header( 'Referrer-Policy: strict-origin-when-cross-origin' );
+	}
+}
+add_action( 'send_headers', 'my_modern_theme_security_headers' );
+
+// Disable XML-RPC
+add_filter( 'xmlrpc_enabled', '__return_false' );
+
+// Remove WordPress version
+function my_modern_theme_remove_version() {
+	return '';
+}
+add_filter( 'the_generator', 'my_modern_theme_remove_version' );
+
+/**
+ * Block Patterns
+ */
 function my_theme_register_patterns() {
     // Organized category registration
     $categories = array(
@@ -150,166 +319,23 @@ function my_theme_register_patterns() {
 }
 add_action('init', 'my_theme_register_patterns');
 
-// ... [Keep the rest of your existing code unchanged] ...
-
-// Enhanced Scripts and Styles Registration
-function my_theme_enqueue_scripts() {
-    // Theme styles
-    wp_enqueue_style('theme-main', get_stylesheet_uri(), array(), filemtime(get_template_directory() . '/style.css'));
-    wp_enqueue_style('theme-modern', get_template_directory_uri() . '/assets/css/modern.css', array(), '1.0');
-    
-    // Theme scripts
-    $dependencies = array('jquery', 'masonry');
-    
-    wp_enqueue_script('theme-scripts', 
-        get_template_directory_uri() . '/assets/js/main.js', 
-        $dependencies, 
-        filemtime(get_template_directory() . '/assets/js/main.js'), 
-        true
-    );
-    
-    // Conditional scripts
-    if (is_front_page()) {
-        wp_enqueue_script('theme-slider', 
-            get_template_directory_uri() . '/assets/js/slider.js', 
-            array(), 
-            '1.0', 
-            true
-        );
-    }
-    
-    // Localize script data
-    wp_localize_script('theme-scripts', 'themeData', array(
-        'ajaxUrl' => admin_url('admin-ajax.php'),
-        'nonce'   => wp_create_nonce('theme-nonce')
-    ));
+/**
+ * Meta Tags
+ */
+function my_modern_theme_meta_tags() {
+	echo '<meta charset="' . esc_attr( get_bloginfo( 'charset' ) ) . '">';
+	echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
+	echo '<meta name="description" content="' . esc_attr( get_bloginfo( 'description' ) ) . '">';
 }
+add_action( 'wp_head', 'my_modern_theme_meta_tags' );
 
-add_action('wp_enqueue_scripts', 'my_theme_enqueue_scripts');
-
-// Enhanced Meta Tags with Open Graph and Twitter Cards
-function my_theme_meta_tags() {
-    echo '<meta charset="' . get_bloginfo('charset') . '">';
-    echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
-    echo '<meta name="description" content="' . esc_attr(get_bloginfo('description')) . '">';
-    
-    // Open Graph
-    echo '<meta property="og:title" content="' . esc_attr(get_the_title()) . '">';
-    echo '<meta property="og:type" content="website">';
-    echo '<meta property="og:url" content="' . esc_url(get_permalink()) . '">';
-    
-    // Twitter Cards
-    echo '<meta name="twitter:card" content="summary_large_image">';
-    echo '<meta name="twitter:site" content="@yourusername">';
-    
-    // Preconnect to important origins
-    echo '<link rel="preconnect" href="https://fonts.gstatic.com">';
-    echo '<link rel="preconnect" href="https://fonts.googleapis.com">';
+/**
+ * Performance Optimization
+ */
+function my_modern_theme_disable_emojis() {
+	remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
+	remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
+	remove_action( 'wp_print_styles', 'print_emoji_styles' );
+	remove_action( 'admin_print_styles', 'print_emoji_styles' );
 }
-
-add_action('wp_head', 'my_theme_meta_tags');
-
-// Additional Theme Features
-// -------------------------
-
- 
-// 4. Gutenberg Block Enhancements
-add_theme_support('editor-color-palette', array(
-    array(
-        'name'  => esc_html('Primary', 'my-modern-theme'),
-        'slug'  => 'primary',
-        'color' => '#2563eb',
-    ),
-    array(
-        'name'  => esc_html('Secondary', 'my-modern-theme'),
-        'slug'  => 'secondary',
-        'color' => '#4f46e5',
-    ),
-));
-
-// 5. Security Headers
-function my_theme_security_headers() {
-    header('X-Content-Type-Options: nosniff');
-    header('X-Frame-Options: SAMEORIGIN');
-    header('X-XSS-Protection: 1; mode=block');
-}
-add_action('send_headers', 'my_theme_security_headers');
-
-// 6. Performance Optimization
-function my_theme_disable_emojis() {
-    remove_action('wp_head', 'print_emoji_detection_script', 7);
-    remove_action('admin_print_scripts', 'print_emoji_detection_script');
-    remove_action('wp_print_styles', 'print_emoji_styles');
-    remove_action('admin_print_styles', 'print_emoji_styles');
-}
-add_action('init', 'my_theme_disable_emojis');
-
-
-function register_custom_slider_block() {
-    register_block_type('my-modern-theme/slider', array(
-        'api_version' => 2,
-        'editor_script' => 'custom-slider-editor',
-        'editor_style' => 'custom-slider-editor',
-        'style' => 'custom-slider-frontend',
-        'render_callback' => 'render_custom_slider_block',
-        'attributes' => array(
-            'showArrows' => array('type' => 'boolean', 'default' => true),
-            'showDots' => array('type' => 'boolean', 'default' => true),
-            'autoplay' => array('type' => 'boolean', 'default' => false),
-            'effect' => array('type' => 'string', 'default' => 'slide'),
-        )
-    ));
-}
-add_action('init', 'register_custom_slider_block');
-
-function render_custom_slider_block($attributes, $content) {
-    ob_start(); ?>
-    <div class="custom-slider swiper"
-         data-autoplay="<?php echo $attributes['autoplay'] ? 'true' : 'false'; ?>"
-         data-effect="<?php echo esc_attr($attributes['effect']); ?>">
-        <div class="swiper-wrapper">
-            <?php echo $content; ?>
-        </div>
-        
-        <?php if ($attributes['showArrows']) : ?>
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
-        <?php endif; ?>
-        
-        <?php if ($attributes['showDots']) : ?>
-            <div class="swiper-pagination"></div>
-        <?php endif; ?>
-    </div>
-    <?php
-    return ob_get_clean();
-}
-function custom_slider_assets() {
-    // Enqueue Swiper CSS and JS
-    wp_enqueue_style('swiper-css', 'https://unpkg.com/swiper@8/swiper-bundle.min.css');
-    wp_enqueue_script('swiper-js', 'https://unpkg.com/swiper@8/swiper-bundle.min.js', array(), null, true);
-    
-    // Initialize sliders
-    wp_add_inline_script('swiper-js', '
-        document.addEventListener("DOMContentLoaded", function() {
-            document.querySelectorAll(".custom-slider").forEach(slider => {
-                new Swiper(slider, {
-                    loop: true,
-                    effect: slider.dataset.effect,
-                    autoHeight: true,
-                    pagination: {
-                        el: ".swiper-pagination",
-                        clickable: true,
-                    },
-                    navigation: {
-                        nextEl: ".swiper-button-next",
-                        prevEl: ".swiper-button-prev",
-                    },
-                    autoplay: slider.dataset.autoplay === "true" ? {
-                        delay: 5000,
-                    } : false,
-                });
-            });
-        });
-    ');
-}
-add_action('wp_enqueue_scripts', 'custom_slider_assets');
+add_action( 'init', 'my_modern_theme_disable_emojis' );
