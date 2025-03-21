@@ -113,5 +113,85 @@
                 }
             }
         }
-    }
+    },
+    "patterns": [
+        {
+            "name": "hero/hero-banner",
+            "label": "Hero Banner",
+            "categories": ["hero"],
+            "file": "./patterns/hero-banner.html"
+        },
+        {
+            "name": "hero/gradient-hero",
+            "label": "Gradient Hero",
+            "categories": ["hero"],
+            "file": "./patterns/gradient-hero.html"
+        },
+        {
+            "name": "slider/image-slider",
+            "label": "Image Slider",
+            "categories": ["slider"],
+            "file": "./patterns/image-slider.html"
+        },
+        {
+            "name": "slider/testimonial-carousel",
+            "label": "Testimonial Carousel",
+            "categories": ["slider", "testimonials"],
+            "file": "./patterns/testimonial-carousel.html"
+        },
+        {
+            "name": "slider/fullscreen-slider",
+            "label": "Fullscreen Slider",
+            "categories": ["slider"],
+            "file": "./patterns/fullscreen-slider.html"
+        },
+        {
+            "name": "features/interactive-features",
+            "label": "Interactive Features",
+            "categories": ["features"],
+            "file": "./patterns/interactive-features.html"
+        },
+        {
+            "name": "features/modal-popup",
+            "label": "Modal Popup",
+            "categories": ["features"],
+            "file": "./patterns/modal-popup.html"
+        },
+        {
+            "name": "features/hover-cards",
+            "label": "Hover Cards",
+            "categories": ["features"],
+            "file": "./patterns/hover-cards.html"
+        },
+        {
+            "name": "portfolio/showcase",
+            "label": "Portfolio Showcase",
+            "categories": ["portfolio"],
+            "file": "./patterns/portfolio-showcase.html"
+        },
+        {
+            "name": "portfolio/project-grid",
+            "label": "Project Grid",
+            "categories": ["portfolio"],
+            "file": "./patterns/project-grid.html"
+        },
+        {
+            "name": "portfolio/filterable",
+            "label": "Filterable Portfolio",
+            "categories": ["portfolio"],
+            "file": "./patterns/portfolio-filterable.html"
+        },
+        {
+            "name": "woocommerce/product-grid",
+            "label": "Product Grid",
+            "categories": ["woocommerce"],
+            "file": "./patterns/product-grid.html"
+        },
+        {
+            "name": "woocommerce/featured-product",
+            "label": "Featured Product",
+            "categories": ["woocommerce"],
+            "file": "./patterns/featured-product.html"
+        }
+    ]
 }
